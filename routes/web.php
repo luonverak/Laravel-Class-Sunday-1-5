@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\MasterPageController;
+use App\Http\Controllers\View\FrontendController;
 use Illuminate\Support\Facades\Route;
 
-Route::get("/",[MasterPageController::class,"index"]);
-Route::get("/category",[MasterPageController::class,"category"]);
+Route::get("/",[FrontendController::class,"home"]);
+Route::get("/category",[FrontendController::class,"category"]);
