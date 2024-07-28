@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --white : white;
+}
+h1{
+    font-size: 25px;
+    color: var(--white);
+}
+h2{
+    font-size: 20px;
+    color: var(--white);
+    margin: 0 !important;
+    padding: 0 !important;
+}
+a{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    color: white;
+    display: flex;
+    align-items: center;
+
+}
+.admin-menus, .admin-contents{
+    min-height: 100vh;
+}
+.admin-header{
+    height: 100px;
+}
+.admin-header img{
+    width:80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.menu-options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Category  */
+.category-item{
+    height: 180px;
+}

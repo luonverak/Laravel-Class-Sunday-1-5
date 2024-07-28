@@ -1,4 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\Category\CategoryController;
+
+
+Route::group(["prefix" => "admin"], function () {
+    Route::post("/add-category", [CategoryController::class, "addCategory"]);
+});

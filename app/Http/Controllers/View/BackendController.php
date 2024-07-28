@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 class BackendController extends Controller
 {
     public function index(){
-        return view("backend.master_page");
+        return view("backend.index");
+    }
+    public function category(){
+        return view("backend.category.category");
     }
 }
