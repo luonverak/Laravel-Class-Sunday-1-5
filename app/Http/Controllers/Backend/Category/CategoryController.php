@@ -17,13 +17,13 @@ class CategoryController extends Controller
     {
         try {
 
-            if (!$request->has("name")) {
+            if (!$request->has("name") || $request->name == null) {
                 return response()->json([
                     "status" => "failed",
                     "msg" => "Something went wrong."
                 ]);
             }
-            
+
             $category = $this->categoryService->addCategory($request);
             if (!$category) {
                 return response()->json([
@@ -35,7 +35,32 @@ class CategoryController extends Controller
                 "status" => "success",
                 "msg" => "Category added success."
             ]);
-            
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+    public function getCategory(Request $request)
+    {
+        try {
+
+            $from = $request->from;
+
+            $categories = $this->categoryService->getCategory();
+
+            if (!$categories->count() > 0) {
+                return response()->json([
+                    "status" => "success",
+                    "msg" => "Empty category",
+                ]);
+            }
+            if ($from == "Web") {
+                $view = view("backend.category.category_record", ["categories" => $categories])->render();
+            }
+            return response()->json([
+                "status" => "success",
+                "msg" => "Success",
+                "view" => $view ?? $categories
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }

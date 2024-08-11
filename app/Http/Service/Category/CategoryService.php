@@ -25,7 +25,30 @@ class CategoryService
             $category->category_thumbnail = $fileName;
             $category->save();
             return $category;
-            
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+    public function getCategory()
+    {
+        try {
+            $catgory = CategoryModel::select(
+                [
+                    "id",
+                    "category_name",
+                    "category_description",
+                    "category_thumbnail"
+                ]
+            )->get();
+            $records = $catgory->map(function ($q) {
+                return [
+                    "id" => $q->id,
+                    "name" => $q->category_name,
+                    "description" => $q->category_description,
+                    "thumbnail" => $q->category_thumbnail ?: emptyImage()
+                ];
+            });
+            return $records;
         } catch (\Throwable $th) {
             throw $th;
         }

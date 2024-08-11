@@ -24,7 +24,7 @@
                 <h1 class="text-center mb-5">Project name</h1>
             </a>
             <div class="menu-options">
-                <a href="/admin/category">
+                <a class="admin-category" href="/admin/category">
                     <img class="mx-2" src="{{ asset('/asset/images/categories.png') }}" alt="">
                     <h2>Category</h2>
                 </a>
