@@ -5,7 +5,7 @@
         <i class="fa fa-plus" aria-hidden="true"></i> Add category
     </button>
     <div class="d-flex flex-wrap category-list">
-       
+       @include('backend.category.category_record')
     </div>
     @include('backend.category.modal.add_category')
     @include('message.toast')

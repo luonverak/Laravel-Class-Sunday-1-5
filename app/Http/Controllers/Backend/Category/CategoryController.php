@@ -43,8 +43,6 @@ class CategoryController extends Controller
     {
         try {
 
-            $from = $request->from;
-
             $categories = $this->categoryService->getCategory();
 
             if (!$categories->count() > 0) {
@@ -53,13 +51,11 @@ class CategoryController extends Controller
                     "msg" => "Empty category",
                 ]);
             }
-            if ($from == "Web") {
-                $view = view("backend.category.category_record", ["categories" => $categories])->render();
-            }
+
             return response()->json([
                 "status" => "success",
                 "msg" => "Success",
-                "view" => $view ?? $categories
+                "categories" => $categories
             ]);
         } catch (\Throwable $th) {
             throw $th;
