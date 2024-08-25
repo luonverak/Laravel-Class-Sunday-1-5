@@ -4,6 +4,7 @@ namespace App\Http\Service\Category;
 
 use Illuminate\Http\Request;
 use App\Models\CategoryModel;
+use GuzzleHttp\Psr7\Uri;
 
 class CategoryService
 {
@@ -22,7 +23,7 @@ class CategoryService
             $category = new CategoryModel();
             $category->category_name = $request->name;
             $category->category_description = $request->description;
-            $category->category_thumbnail = $fileName;
+            $category->category_thumbnail = url("asset/images/$fileName");
             $category->save();
             return $category;
         } catch (\Throwable $th) {
@@ -45,7 +46,7 @@ class CategoryService
                     "id" => $q->id,
                     "name" => $q->category_name,
                     "description" => $q->category_description,
-                    "thumbnail" => $q->category_thumbnail ?: emptyImage()
+                    "thumbnail" =>  $q->category_thumbnail ?: emptyImage()
                 ];
             });
             return $records;
@@ -63,6 +64,7 @@ class CategoryService
             if ($file) {
                 $fileName = date("d-m-y-h:i:s") . '-' . $file->getClientOriginalName();
                 $file->move("asset/images", $fileName);
+                $fileName = url("asset/images/$fileName");
             } else {
                 $fileName = $request->old_thumbnail;
             }

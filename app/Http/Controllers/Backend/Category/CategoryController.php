@@ -95,9 +95,8 @@ class CategoryController extends Controller
                 "id" => $category->id,
                 "name" => $category->category_name,
                 "description" => $category->category_description,
-                "thumbnail" => $category->category_thumbnail ?: emptyImage()
+                "thumbnail" =>  $category->category_thumbnail  ?: emptyImage()
             ];
-
 
             return response()->json([
                 "status" => "success",
