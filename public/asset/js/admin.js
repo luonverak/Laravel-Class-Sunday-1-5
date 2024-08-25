@@ -31,15 +31,12 @@ function addCategory() {
             success: function (response) {
 
                 if (response.status != "success") {
-                    $("div.toast-header").addClass("bg-danger text-white").find("strong.toast-status").text(response.status);
-                    $("div.toast-body").addClass("bg-danger text-white").text(response.msg);
-                    $("div.toast").toast("show");
+                    toastErrorMessage(response);
                     return;
                 }
                 $("div.category-modal").modal("hide");
-                $("div.toast-header").addClass("bg-success text-white").find("strong.toast-status").text(response.status);
-                $("div.toast-body").addClass("bg-success text-white").text(response.msg);
-                $("div.toast").toast("show");
+                toastSuccessMessage(response);
+                $("div.category-list").append(response.view);
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -48,4 +45,15 @@ function addCategory() {
     } catch (error) {
         console.log(error);
     }
+}
+
+function toastErrorMessage(response) {
+    $("div.toast-header").addClass("bg-danger text-white").find("strong.toast-status").text(response.status);
+    $("div.toast-body").addClass("bg-danger text-white").text(response.msg);
+    $("div.toast").toast("show");
+}
+function toastSuccessMessage(response) {
+    $("div.toast-header").addClass("bg-success text-white").find("strong.toast-status").text(response.status);
+    $("div.toast-body").addClass("bg-success text-white").text(response.msg);
+    $("div.toast").toast("show");
 }

@@ -1,11 +1,11 @@
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="liveToast" class="toast rounded" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-            <strong class="me-auto toast-status">Bootstrap</strong>
+            <strong class="me-auto toast-status"></strong>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="toast-body">
-            Hello, world! This is a toast message.
+        <div class="toast-body rounded-bottom">
+           
         </div>
     </div>
 </div>
