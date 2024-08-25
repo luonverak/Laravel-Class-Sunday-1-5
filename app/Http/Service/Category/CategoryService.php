@@ -53,4 +53,36 @@ class CategoryService
             throw $th;
         }
     }
+    public function editCategory(Request $request)
+    {
+        try {
+
+            $file = $request->file("thumbnail");
+            $fileName = "";
+
+            if ($file) {
+                $fileName = date("d-m-y-h:i:s") . '-' . $file->getClientOriginalName();
+                $file->move("asset/images", $fileName);
+            } else {
+                $fileName = $request->old_thumbnail;
+            }
+
+            $id = Decryption($request->id);
+
+            $category = CategoryModel::where("id", $id)->first();
+            if (!$category) {
+                return response()->json([
+                    "status" => "failed",
+                    "msg" => "Something went wrong."
+                ]);
+            }
+            $category->category_name = $request->name;
+            $category->category_description = $request->description;
+            $category->category_thumbnail = $fileName;
+            $category->save();
+            return $category;
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

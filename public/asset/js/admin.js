@@ -6,13 +6,13 @@ jQuery(function () {
 $(document)
     .on("click", "button.open-add-category", function () {
         $("div.category-modal").find("h1").text("Add category");
-        $("#accept-button").addClass("save-category").removeClass("edit-category").text("Save").attr("data-id","");
+        $("#accept-button").addClass("save-category").removeClass("edit-category").text("Save").attr("data-id", "");
         $("div.category-modal").modal("show");
     })
     .on("click", "button.save-category", function () {
         addCategory();
     }).on("click", "span.open-edit-category", function () {
-    
+
         let record = $(this).siblings();
         let name = record.find("h5").text();
         let thumbnail = record.find("img").attr("src");
@@ -23,18 +23,19 @@ $(document)
         $("textarea#description").val(description);
 
         $("div.category-modal").find("h1").text("Edit category");
-        $("#accept-button").removeClass("save-category").addClass("edit-category").text("Save change").attr("data-id",$(this).attr("data-id"));
+        $("#accept-button").removeClass("save-category").addClass("edit-category").text("Save change").attr("data-id", $(this).attr("data-id"));
         $("div.category-modal").modal("show");
 
 
 
     }).on("click", ".edit-category", function () {
-        let id = "";
+        let id = $(this).attr("data-id");
         let name = $("input#name").val();
         let description = $("textarea#description").val();
         let thumbnail = $("input#thumbnail")[0].files[0];
+        let oldThumbnail = $("input#old_thumbnail").val();
 
-        editCategory(id, name, description, thumbnail);
+        editCategory(id, name, description, thumbnail, oldThumbnail);
     });
 
 function toastErrorMessage(response) {
@@ -49,6 +50,7 @@ function toastSuccessMessage(response) {
 }
 
 function addCategory() {
+
     let name = $("input#name").val();
     let description = $("textarea#description").val();
     let thumbnail = $("input#thumbnail")[0].files[0];
@@ -87,16 +89,18 @@ function addCategory() {
         console.log(error);
     }
 }
-function editCategory(id, name, description, thumbnail) {
+function editCategory(id, name, description, thumbnail, oldThumbnail) {
+
     let form = new FormData();
     form.append("id", id);
     form.append("name", name);
     form.append("description", description);
     form.append("thumbnail", thumbnail);
+    form.append("old_thumbnail", oldThumbnail);
 
     try {
         $.ajax({
-            url: "/api/admin/add-category",
+            url: "/api/admin/edit-category",
             type: "POST",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -113,7 +117,7 @@ function editCategory(id, name, description, thumbnail) {
                 }
                 $("div.category-modal").modal("hide");
                 toastSuccessMessage(response);
-                $("div.category-list").append(response.view);
+                $("div.category-list").find("div.category-item[data-id='" + id + "'").replaceWith(response.view);
             },
             error: function (xhr, status, error) {
                 console.log(error);

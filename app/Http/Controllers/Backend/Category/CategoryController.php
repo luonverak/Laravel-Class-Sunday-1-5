@@ -71,4 +71,41 @@ class CategoryController extends Controller
             throw $th;
         }
     }
+    public function editCategory(Request $request)
+    {
+        try {
+
+            if (!$request->has("name") || $request->name == null) {
+                return response()->json([
+                    "status" => "failed",
+                    "msg" => "Something went wrong."
+                ]);
+            }
+
+            $category = $this->categoryService->editCategory($request);
+
+            if (!$category) {
+                return response()->json([
+                    "status" => "failed",
+                    "msg" => "Something added failed."
+                ]);
+            }
+
+            $records =   [
+                "id" => $category->id,
+                "name" => $category->category_name,
+                "description" => $category->category_description,
+                "thumbnail" => $category->category_thumbnail ?: emptyImage()
+            ];
+
+
+            return response()->json([
+                "status" => "success",
+                "msg" => "Category edited success.",
+                "view" => view("backend.category.category_record", ["category" => $records])->render()
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
