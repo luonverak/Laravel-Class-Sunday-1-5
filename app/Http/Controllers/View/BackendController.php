@@ -22,12 +22,6 @@ class BackendController extends Controller
     {
         $categories = $this->categoryService->getCategory();
 
-        if (!$categories->count() > 0) {
-            return response()->json([
-                "status" => "success",
-                "msg" => "Empty category",
-            ]);
-        }
         return view("backend.category.category",["categories" => $categories]);
     }
 }

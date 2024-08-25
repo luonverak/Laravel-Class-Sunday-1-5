@@ -11,12 +11,13 @@
                     <label for="description">Description</label>
                     <textarea id="description" rows="5" class="form-control  mb-2"></textarea>
                     <label for="thumbnail">Thumbnail</label>
+                    <input type="hidden" value="" id="old_thumbnail">
                     <input type="file" id="thumbnail" class="form-control  mb-2">
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary save-category">Save</button>
+                <button id="accept-button" type="button" data-id="" class="btn btn-primary save-category">Save</button>
             </div>
         </div>
     </div>
