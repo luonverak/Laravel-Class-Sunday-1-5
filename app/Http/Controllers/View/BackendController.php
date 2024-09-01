@@ -8,11 +8,6 @@ use App\Http\Service\Category\CategoryService;
 
 class BackendController extends Controller
 {
-    private $categoryService;
-    public function __construct()
-    {
-        $this->categoryService = new CategoryService();
-    }
 
     public function index()
     {
@@ -20,8 +15,6 @@ class BackendController extends Controller
     }
     public function category()
     {
-        $categories = $this->categoryService->getCategory();
-
-        return view("backend.category.category",["categories" => $categories]);
+        return view("backend.category.category");
     }
 }

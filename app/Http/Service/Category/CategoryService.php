@@ -18,12 +18,13 @@ class CategoryService
             if ($file) {
                 $fileName = date("d-m-y-h:i:s") . '-' . $file->getClientOriginalName();
                 $file->move("asset/images", $fileName);
+                $fileName = url("asset/images/$fileName");
             }
 
             $category = new CategoryModel();
             $category->category_name = $request->name;
             $category->category_description = $request->description;
-            $category->category_thumbnail = url("asset/images/$fileName");
+            $category->category_thumbnail = $fileName ?? "";
             $category->save();
             return $category;
         } catch (\Throwable $th) {

@@ -1,42 +1,34 @@
+$(document).on("click", "button.open-add-category", function () {
+    $("div.category-modal").find("h1").text("Add category");
+    $("#accept-button").addClass("save-category").removeClass("edit-category").text("Save").attr("data-id", "");
+    $("div.category-modal").modal("show");
+}).on("click", "button.save-category", function () {
+    addCategory();
+}).on("click", "span.open-edit-category", function () {
 
-jQuery(function () {
+    let record = $(this).siblings();
+    let name = record.find("h5").text();
+    let thumbnail = record.find("img").attr("src");
+    let description = record.find("p").text();
 
+    $("input#name").val(name);
+    $("input#old_thumbnail").val(thumbnail);
+    $("textarea#description").val(description);
+
+    $("div.category-modal").find("h1").text("Edit category");
+    $("#accept-button").removeClass("save-category").addClass("edit-category").text("Save change").attr("data-id", $(this).attr("data-id"));
+    $("div.category-modal").modal("show");
+
+}).on("click", ".edit-category", function () {
+    let id = $(this).attr("data-id");
+    let name = $("input#name").val();
+    let description = $("textarea#description").val();
+    let thumbnail = $("input#thumbnail")[0].files[0];
+    let oldThumbnail = $("input#old_thumbnail").val();
+
+    editCategory(id, name, description, thumbnail, oldThumbnail);
 });
 
-$(document)
-    .on("click", "button.open-add-category", function () {
-        $("div.category-modal").find("h1").text("Add category");
-        $("#accept-button").addClass("save-category").removeClass("edit-category").text("Save").attr("data-id", "");
-        $("div.category-modal").modal("show");
-    })
-    .on("click", "button.save-category", function () {
-        addCategory();
-    }).on("click", "span.open-edit-category", function () {
-
-        let record = $(this).siblings();
-        let name = record.find("h5").text();
-        let thumbnail = record.find("img").attr("src");
-        let description = record.find("p").text();
-
-        $("input#name").val(name);
-        $("input#old_thumbnail").val(thumbnail);
-        $("textarea#description").val(description);
-
-        $("div.category-modal").find("h1").text("Edit category");
-        $("#accept-button").removeClass("save-category").addClass("edit-category").text("Save change").attr("data-id", $(this).attr("data-id"));
-        $("div.category-modal").modal("show");
-
-
-
-    }).on("click", ".edit-category", function () {
-        let id = $(this).attr("data-id");
-        let name = $("input#name").val();
-        let description = $("textarea#description").val();
-        let thumbnail = $("input#thumbnail")[0].files[0];
-        let oldThumbnail = $("input#old_thumbnail").val();
-
-        editCategory(id, name, description, thumbnail, oldThumbnail);
-    });
 
 function toastErrorMessage(response) {
     $("div.toast-header").addClass("bg-danger text-white").find("strong.toast-status").text(response.status);
@@ -79,7 +71,8 @@ function addCategory() {
                 }
                 $("div.category-modal").modal("hide");
                 toastSuccessMessage(response);
-                $("div.category-list").append(response.view);
+                let category = categryRecords(response.view);
+                $("div.category-list").append(category);
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -126,4 +119,20 @@ function editCategory(id, name, description, thumbnail, oldThumbnail) {
     } catch (error) {
         console.log(error);
     }
+}
+
+function categryRecords(category) {
+    return `<div class="col-3 p-2 category-item position-relative d-flex justify-content-end"
+                    data-id="${category.id}">
+                    <div
+                        class="w-100 h-100 bg-secondary bg-opacity-25 rounded d-flex justify-content-center flex-column align-items-center">
+                        <img class="mt-1" src="${category.thumbnail}" alt="">
+                        <h5 class="fw-semibold pt-3 text-dark">${category.name}</h5>
+                        <p class="d-none">{{ $category['description'] }}</p>
+                    </div>
+                    <span class="position-absolute open-edit-category p-1" role="button" data-id="${category.id}">
+                        <img src="/asset/icon/edit.svg" alt="">
+                    </span>
+                </div>
+            `;
 }

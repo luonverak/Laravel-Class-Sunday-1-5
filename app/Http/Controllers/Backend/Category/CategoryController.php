@@ -32,7 +32,7 @@ class CategoryController extends Controller
                 ]);
             }
 
-            $records =   [
+            $record =   [
                 "id" => $category->id,
                 "name" => $category->category_name,
                 "description" => $category->category_description,
@@ -43,7 +43,7 @@ class CategoryController extends Controller
             return response()->json([
                 "status" => "success",
                 "msg" => "Category added success.",
-                "view" => view("backend.category.category_record", ["category" => $records])->render()
+                "view" => $record
             ]);
         } catch (\Throwable $th) {
             throw $th;

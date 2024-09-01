@@ -35,6 +35,7 @@
         </div>
     </div>
 </body>
+@yield('script')
 <script src="/asset/js/admin.js"></script>
 
 </html>
