@@ -23,10 +23,16 @@
                 </div>
                 <h1 class="text-center mb-5">Project name</h1>
             </a>
-            <div class="menu-options">
-                <a class="admin-category" href="/admin/category">
+            <div class="menu-options mb-4">
+                <a href="/admin/category">
                     <img class="mx-2" src="{{ asset('/asset/images/categories.png') }}" alt="">
                     <h2>Category</h2>
+                </a>
+            </div>
+            <div class="menu-options">
+                <a href="/admin/category">
+                    <img class="mx-2 icons-menu" src="{{ asset('/asset/icon/creative.png') }}" alt="">
+                    <h2>Content</h2>
                 </a>
             </div>
         </div>

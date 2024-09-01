@@ -101,7 +101,7 @@ class CategoryController extends Controller
             return response()->json([
                 "status" => "success",
                 "msg" => "Category edited success.",
-                "view" => view("backend.category.category_record", ["category" => $records])->render()
+                "view" => $records
             ]);
         } catch (\Throwable $th) {
             throw $th;

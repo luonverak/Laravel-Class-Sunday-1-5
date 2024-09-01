@@ -45,10 +45,14 @@ a {
     border-radius: 50%;
     object-fit: cover;
 }
-
+.icons-menu{
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
 .menu-options {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
 }
 

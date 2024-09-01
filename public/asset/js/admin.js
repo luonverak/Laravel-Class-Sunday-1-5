@@ -110,7 +110,8 @@ function editCategory(id, name, description, thumbnail, oldThumbnail) {
                 }
                 $("div.category-modal").modal("hide");
                 toastSuccessMessage(response);
-                $("div.category-list").find("div.category-item[data-id='" + id + "'").replaceWith(response.view);
+                let category = categryRecords(response.view);
+                $("div.category-list").find("div.category-item[data-id='" + id + "'").replaceWith(category);
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -123,14 +124,14 @@ function editCategory(id, name, description, thumbnail, oldThumbnail) {
 
 function categryRecords(category) {
     return `<div class="col-3 p-2 category-item position-relative d-flex justify-content-end"
-                    data-id="${category.id}">
+                    data-id="${btoa(category.id)}">
                     <div
                         class="w-100 h-100 bg-secondary bg-opacity-25 rounded d-flex justify-content-center flex-column align-items-center">
                         <img class="mt-1" src="${category.thumbnail}" alt="">
                         <h5 class="fw-semibold pt-3 text-dark">${category.name}</h5>
-                        <p class="d-none">{{ $category['description'] }}</p>
+                        <p class="d-none">${category.description}</p>
                     </div>
-                    <span class="position-absolute open-edit-category p-1" role="button" data-id="${category.id}">
+                    <span class="position-absolute open-edit-category p-1" role="button" data-id="${btoa(category.id)}">
                         <img src="/asset/icon/edit.svg" alt="">
                     </span>
                 </div>

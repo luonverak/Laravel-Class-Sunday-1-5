@@ -23,7 +23,7 @@ class CategoryService
 
             $category = new CategoryModel();
             $category->category_name = $request->name;
-            $category->category_description = $request->description;
+            $category->category_description = $request->description  ?? "";
             $category->category_thumbnail = $fileName ?? "";
             $category->save();
             return $category;
